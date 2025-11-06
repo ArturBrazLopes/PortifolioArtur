@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artur Braz Lopes - Portfolio</title>
+    <meta name="description" content="Portfolio de Artur Braz Lopes - Estudante de Engenharia de Software">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { 
+            --primary: #FFD700; 
+            --bg: #0f0f0f; 
+            --card: #1a1a1a; 
+            --text: #ffffff; 
+            --text-muted: #a0a0a0; 
+            --border: #2a2a2a;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; 
+        }
+        .font-display { font-family: 'Montserrat', sans-serif; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+        
+        /* Navbar */
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; transition: all 0.3s; }
+        nav.scrolled { background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+        .logo { font-size: 1.875rem; font-weight: 900; cursor: pointer; background: none; border: none; color: var(--text); padding: 0.5rem; }
+        .logo span:first-child { color: var(--primary); }
+        .nav-menu { display: none; gap: 0.5rem; }
+        @media (min-width: 768px) { .nav-menu { display: flex; } }
+        .nav-btn { background: none; border: none; color: var(--text); padding: 0.5rem 1rem; cursor: pointer; border-radius: 0.375rem; }
+        .nav-btn:hover { background: var(--card); }
+        .mobile-menu-btn { display: block; background: none; border: none; color: var(--text); padding: 0.5rem; cursor: pointer; }
+        @media (min-width: 768px) { .mobile-menu-btn { display: none; } }
+        .mobile-menu { display: none; background: var(--bg); border-bottom: 1px solid var(--border); padding: 1rem 0; }
+        .mobile-menu.open { display: block; }
+        
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 5rem 0; }
+        .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+        @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+        .badge { display: inline-block; padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 600; border-radius: 0.375rem; background: rgba(255, 215, 0, 0.1); color: var(--primary); border: 1px solid rgba(255, 215, 0, 0.2); }
+        .hero-title { font-size: clamp(2.25rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.2; margin: 2rem 0; }
+        .text-primary { color: var(--primary); }
+        .text-muted { color: var(--text-muted); }
+        .hero-tagline { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2rem; }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
+        .btn { display: inline-flex; align-items: center; padding: 0.75rem 2rem; font-weight: 700; border-radius: 0.375rem; text-decoration: none; cursor: pointer; border: none; }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-outline { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 215, 0, 0.2); color: var(--text); }
+        .btn:hover { opacity: 0.9; }
+        
+        /* Sections */
+        section { padding: 5rem 0; }
+        @media (min-width: 768px) { section { padding: 8rem 0; } }
+        .section-header { text-align: center; max-width: 48rem; margin: 0 auto 4rem; }
+        .section-title { font-size: clamp(2.25rem, 4vw, 3.75rem); font-weight: 700; margin: 1rem 0 1.5rem; }
+        .section-desc { font-size: 1.125rem; color: var(--text-muted); }
+        
+        /* Cards */
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 0.5rem; padding: 2rem; transition: all 0.3s; }
+        .card:hover { border-color: rgba(255, 215, 0, 0.3); transform: translateY(-2px); }
+        .grid { display: grid; gap: 1.5rem; }
+        .grid-2 { grid-template-columns: 1fr; }
+        @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+        .grid-3 { grid-template-columns: 1fr; }
+        @media (min-width: 1024px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+        .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        @media (min-width: 768px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+        .skill-card { text-align: center; }
+        .skill-icon { font-size: 3rem; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; height: 3rem; }
+        .skill-icon svg { width: 3rem; height: 3rem; }
+        .skill-icon img { width: 3rem; height: 3rem; object-fit: contain; }
+        
+        /* Footer */
+        footer { background: rgba(26, 26, 26, 0.5); border-top: 1px solid var(--border); padding: 4rem 0 2rem; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-bottom: 3rem; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center; }
+        @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+        a { color: inherit; text-decoration: none; }
+        a:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <button class="logo font-display" onclick="scrollTo('#hero')">
+                    <span>Artur</span> Braz
+                </button>
+                <div class="nav-menu">
+                    <button class="nav-btn" onclick="scrollTo('#hero')">Início</button>
+                    <button class="nav-btn" onclick="scrollTo('#sobre')">Sobre</button>
+                    <button class="nav-btn" onclick="scrollTo('#formacao')">Formação</button>
+                    <button class="nav-btn" onclick="scrollTo('#certificados')">Certificados</button>
+                    <button class="nav-btn" onclick="scrollTo('#projetos')">Projetos</button>
+                </div>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+            </div>
+        </div>
+        <div class="mobile-menu container" id="mobile-menu">
+            <button class="nav-btn" style="display:block;width:100%;text-align:left;" onclick="scrollTo('#hero')">Início</button>
+            <button class="nav-btn" style="display:block;width:100%;text-align:left;" onclick="scrollTo('#sobre')">Sobre</button>
+            <button class="nav-btn" style="display:block;width:100%;text-align:left;" onclick="scrollTo('#formacao')">Formação</button>
+            <button class="nav-btn" style="display:block;width:100%;text-align:left;" onclick="scrollTo('#certificados')">Certificados</button>
+            <button class="nav-btn" style="display:block;width:100%;text-align:left;" onclick="scrollTo('#projetos')">Projetos</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="badge">ESTUDANTE DE ENGENHARIA DE SOFTWARE</div>
+                    <h1 class="hero-title font-display">
+                        Olá, me chamo <span class="text-primary">Artur Braz Lopes</span>
+                    </h1>
+                    <p class="hero-tagline">
+                        Cursando Engenharia de Software, com foco em criar experiências digitais inovadoras, eficientes e alinhadas às necessidades do usuário.
+                    </p>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="scrollTo('#projetos')">Ver Projetos</button>
+                        <button class="btn btn-outline">Ver Portfolio</button>
+                    </div>
+                    <div class="btn-group">
+                        <a href="https://github.com/ArturBrazLopes" target="_blank" class="btn btn-outline">GitHub</a>
+                        <a href="https://linkedin.com" target="_blank" class="btn btn-outline">LinkedIn</a>
+                        <a href="https://instagram.com" target="_blank" class="btn btn-outline">Instagram</a>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; position: relative;">
+                    <div style="position: relative; display: inline-block;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150%; height: 150%; min-width: 600px; min-height: 600px; background: radial-gradient(circle at center, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.15) 30%, rgba(255, 215, 0, 0.08) 50%, rgba(255, 215, 0, 0.04) 70%, transparent 100%); z-index: 1; pointer-events: none;"></div>
+                        <div style="position: relative; display: inline-block; overflow: hidden; border-radius: 1rem;">
+                            <img src="./attached_assets/Portifolio-imagem_1761944696649.png" alt="Artur Braz Lopes" style="max-width: 100%; height: auto; display: block; position: relative; z-index: 2;">
+                            <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 70%, rgba(15, 15, 15, 0.6) 88%, rgba(15, 15, 15, 0.85) 95%, rgba(15, 15, 15, 1) 100%); pointer-events: none; z-index: 3; border-radius: 1rem;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">Sobre Mim</div>
+                <h2 class="section-title font-display">
+                    Desenvolvedor <span class="text-primary">Autodidata</span> e Proativo
+                </h2>
+                <p class="section-desc">
+                    Apaixonado por tecnologia e sempre em busca de novos desafios. Aprendo de forma autônoma e estou constantemente explorando novas ferramentas e linguagens.
+                </p>
+            </div>
+
+            <div style="margin-top: 5rem;">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div class="badge">Competências</div>
+                    <h3 class="section-title font-display">
+                        Linguagens de <span class="text-primary">Programação</span>
+                    </h3>
+                </div>
+
+                <div class="grid grid-4" style="max-width: 80rem; margin: 0 auto;">
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <img src="./attached_assets/html.png" alt="HTML">
+                        </div>
+                        <h4 class="font-display">HTML</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <img src="./attached_assets/css.png" alt="CSS">
+                        </div>
+                        <h4 class="font-display">CSS</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <img src="./attached_assets/javascript.png" alt="JavaScript">
+                        </div>
+                        <h4 class="font-display">JavaScript</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <linearGradient id="python-original-a" gradientUnits="userSpaceOnUse" x1="70.252" y1="1237.476" x2="170.659" y2="1151.089" gradientTransform="matrix(0.563, -0.563, 0.563, 0.563, -454.517, 452.893)">
+                                    <stop offset="0" style="stop-color:#5A9FD4"/>
+                                    <stop offset="1" style="stop-color:#306998"/>
+                                </linearGradient>
+                                <linearGradient id="python-original-b" gradientUnits="userSpaceOnUse" x1="209.474" y1="1098.811" x2="173.62" y2="1149.537" gradientTransform="matrix(0.563, -0.563, 0.563, 0.563, -454.517, 452.893)">
+                                    <stop offset="0" style="stop-color:#FFD43B"/>
+                                    <stop offset="1" style="stop-color:#FFE873"/>
+                                </linearGradient>
+                                <path fill="url(#python-original-a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.521 13.124 12.521h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-1.001-8.645-1.351-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z"/>
+                                <path fill="url(#python-original-b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.549 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521H91.682zm-28.651 69.135c-2.561 0-4.634 2.097-4.634 4.692 0 2.602 2.074 4.719 4.634 4.719 2.55 0 4.633-2.117 4.633-4.719 0-2.595-2.083-4.692-4.633-4.692z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-display">Python</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <img src="./attached_assets/csharp.png" alt="C#">
+                        </div>
+                        <h4 class="font-display">C#</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4.7 3.5l106.8-62c-.5-1.2-1.5-2.1-2.4-2.7z" fill="#00599C"/>
+                                <path d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z" fill="#004482"/>
+                                <path d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-12.9-7.6z" fill="#fff"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-display">C++</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <img src="./attached_assets/java.png" alt="Java">
+                        </div>
+                        <h4 class="font-display">Java</h4>
+                    </div>
+                    <div class="card skill-card">
+                        <div class="skill-icon">
+                            <img src="./attached_assets/lua.png" alt="Lua">
+                        </div>
+                        <h4 class="font-display">Lua</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formação -->
+    <section id="formacao" style="background: rgba(26, 26, 26, 0.3);">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">Jornada Acadêmica</div>
+                <h2 class="section-title font-display">
+                    Formação e <span class="text-primary">Aprendizado</span>
+                </h2>
+                <p class="section-desc">
+                    Construindo uma base sólida através de formação acadêmica e cursos especializados.
+                </p>
+            </div>
+
+            <div style="max-width: 80rem; margin: 0 auto;">
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3 class="font-display" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Engenharia de Software</h3>
+                    <p style="font-size: 1.125rem; color: var(--text-muted); margin-bottom: 1rem;">Universidade Católica de Brasília (UCB)</p>
+                    <div class="badge">2023 - 2026 (previsão)</div>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">
+                        Curso tecnólogo focado em desenvolvimento de software, análise de sistemas, banco de dados e metodologias ágeis.
+                    </p>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h4 class="font-display" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Cursos SENAI</h4>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">• HTML & CSS</p>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">• JavaScript</p>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">• C# - Desenvolvimento</p>
+                        <p style="color: var(--text-muted);">• API e Interface com C#</p>
+                    </div>
+
+                    <div class="card">
+                        <h4 class="font-display" style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Cursos Codecademy</h4>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">• C++ Programming</p>
+                        <p style="color: var(--text-muted);">• Java Programming</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificados -->
+    <section id="certificados">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">Certificados</div>
+                <h2 class="section-title font-display">
+                    Minhas <span class="text-primary">Certificações</span>
+                </h2>
+                <p class="section-desc">
+                    Cursos e formações que contribuíram para meu desenvolvimento profissional
+                </p>
+            </div>
+
+            <div class="grid grid-3" style="max-width: 96rem; margin: 0 auto;">
+                <a href="./attached_assets/Screenshot_2_1761246925991.png" target="_blank" class="card">
+                    <h3 class="font-display" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Learn C++</h3>
+                    <div class="badge" style="margin-bottom: 0.75rem;">Codecademy</div>
+                    <p class="text-muted">Curso completo de C++ abordando fundamentos da linguagem.</p>
+                </a>
+
+                <a href="./attached_assets/Senai certificado Front-end_1761243531211.pdf" target="_blank" class="card">
+                    <h3 class="font-display" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Desenvolvedor Front-end</h3>
+                    <div class="badge" style="margin-bottom: 0.75rem;">SENAI</div>
+                    <p class="text-muted">Desenvolvimento de interfaces web modernas.</p>
+                </a>
+
+                <a href="./attached_assets/Senai certificado Back-end_1761243531211.pdf" target="_blank" class="card">
+                    <h3 class="font-display" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Desenvolvedor Back-end</h3>
+                    <div class="badge" style="margin-bottom: 0.75rem;">SENAI</div>
+                    <p class="text-muted">Desenvolvimento de aplicações server-side.</p>
+                </a>
+
+                <a href="./attached_assets/Senai certificado Mundo do Trabalho _1761243531209.pdf" target="_blank" class="card">
+                    <h3 class="font-display" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Mundo do Trabalho</h3>
+                    <div class="badge" style="margin-bottom: 0.75rem;">SENAI</div>
+                    <p class="text-muted">Formação voltada para competências profissionais.</p>
+                </a>
+
+                <a href="./attached_assets/Senai_certificado_Dev_Aplicativo_Hibridos_1761243531210.pdf" target="_blank" class="card">
+                    <h3 class="font-display" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Desenvolvedor de Aplicativos Híbridos</h3>
+                    <div class="badge" style="margin-bottom: 0.75rem;">SENAI</div>
+                    <p class="text-muted">Criação de aplicações mobile multiplataforma.</p>
+                </a>
+
+                <a href="./attached_assets/Senai_certificado_Dev_CSharp_1761243531211.pdf" target="_blank" class="card">
+                    <h3 class="font-display" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Desenvolvedor C#</h3>
+                    <div class="badge" style="margin-bottom: 0.75rem;">SENAI</div>
+                    <p class="text-muted">Programação com C# e .NET Framework.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos -->
+    <section id="projetos">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">Meus Projetos</div>
+                <h2 class="section-title font-display">
+                    Portfólio de <span class="text-primary">Projetos</span>
+                </h2>
+                <p class="section-desc">
+                    Confira alguns dos projetos que desenvolvi utilizando diferentes tecnologias e abordagens.
+                </p>
+            </div>
+
+            <div class="grid grid-2" style="max-width: 96rem; margin: 0 auto;">
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=800&h=600&fit=crop" alt="ChatApp" style="width: 100%; height: 200px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 1rem;">ChatApp - Sistema de Mensagens</h3>
+                        <p class="text-muted" style="margin-bottom: 1.5rem;">
+                            Aplicativo de chat em tempo real construído com WPF e C#.
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="badge">WPF</span>
+                            <span class="badge">C#</span>
+                            <span class="badge">.NET</span>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <a href="https://github.com/ArturBrazLopes/ChatApp-in-CSharp" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center; display: block;">Código</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop" alt="FinMate" style="width: 100%; height: 200px; object-fit: cover;">
+                    <div style="padding: 1.5rem;">
+                        <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 1rem;">FinMate - App de Finanças</h3>
+                        <p class="text-muted" style="margin-bottom: 1.5rem;">
+                            Aplicativo completo de gestão financeira pessoal.
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="badge">React</span>
+                            <span class="badge">Vite</span>
+                            <span class="badge">MongoDB</span>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <a href="https://github.com/ArturBrazLopes/FitMate" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center; display: block;">Código</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="font-display" style="font-size: 1.875rem; font-weight: 900; margin-bottom: 1.5rem;">
+                        <span class="text-primary">Artur</span> Braz Lopes
+                    </h3>
+                    <p class="text-muted" style="margin-bottom: 1.5rem;">
+                        Estudante de Engenharia de Software focado em criar experiências digitais inovadoras.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="https://github.com/ArturBrazLopes" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                        <a href="https://instagram.com" target="_blank">Instagram</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase;">Disponibilidade</h4>
+                    <div class="badge" style="margin-bottom: 1rem;">Disponível</div>
+                    <p class="text-muted" style="font-size: 0.875rem;">
+                        Atualmente trabalhando em projetos pessoais e com disponibilidade para novas oportunidades.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 style="font-weight: 700; margin-bottom: 1rem; font-size: 0.875rem; text-transform: uppercase;">Contato</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="mailto:arturbrazlopes@gmail.com" style="font-size: 0.875rem;">📧 arturbrazlopes@gmail.com</a>
+                        <a href="tel:+5561982698558" style="font-size: 0.875rem;">📱 +55 61 98269-8558</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p style="font-size: 0.875rem; color: var(--text-muted);">
+                    © <span id="year"></span> Artur Braz Lopes. Todos os direitos reservados.
+                </p>
+                <p style="font-size: 0.875rem; color: var(--text-muted);">
+                    Feito com ❤️ e dedicação
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll effects
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        function scrollTo(id) {
+            const el = document.querySelector(id);
+            if (el) {
+                const offset = 80;
+                const pos = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top: pos, behavior: 'smooth' });
+                document.getElementById('mobile-menu').classList.remove('open');
+            }
+        }
+
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        }
+
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
